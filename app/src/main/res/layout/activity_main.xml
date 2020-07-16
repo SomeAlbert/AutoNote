@@ -10,9 +10,9 @@
 
 
         <TextView
-            android:id="@+id/speech"
+            android:id="@+id/speechView"
             android:layout_width="match_parent"
-            android:layout_height="246dp"
+            android:layout_height="620dp"
             android:text="Hello World!" />
 
         <Button
