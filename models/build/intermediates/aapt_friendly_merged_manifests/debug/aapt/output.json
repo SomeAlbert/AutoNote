@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "applicationId": "org.kaldi.models",
+  "applicationId": "com.example.models",
   "variantType": "LIBRARY",
   "elements": [
     {
@@ -19,7 +19,7 @@
       },
       "path": "AndroidManifest.xml",
       "properties": {
-        "packageId": "org.kaldi.models",
+        "packageId": "com.example.models",
         "split": ""
       }
     }

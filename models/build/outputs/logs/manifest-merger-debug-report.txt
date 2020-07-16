@@ -8,7 +8,7 @@ INJECTED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\
 INJECTED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml:1:1-3:12
 INJECTED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml:1:1-3:12
 	package
-		ADDED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml:2:5-31
+		ADDED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml:2:5-33
 		INJECTED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
 	android:versionName
