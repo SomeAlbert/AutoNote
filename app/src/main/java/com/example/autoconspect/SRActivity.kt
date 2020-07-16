@@ -74,7 +74,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
 
                 // Vosk.SetLogLevel(0)
 
-                activityReference?.get()?.model = Model("$assetDir/model-android") //fixme model
+                activityReference?.get()?.model = Model("$assetDir/model-small-ru") //fixme model
             } catch (e: IOException) {
                 return e
             }
