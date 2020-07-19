@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
         <TextView
+            android:textAlignment="center"
             android:id="@+id/speechView"
             android:layout_width="match_parent"
             android:layout_height="416dp"
@@ -20,10 +21,14 @@
             android:layout_height="wrap_content"
             android:text="start recognition"
             android:layout_gravity="center_horizontal"/>
+
         <TextView
-            android:id="@+id/infoView"
+            android:textStyle="bold"
+            android:id="@+id/spkInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="info"/>
+            android:layout_height="33dp"
+            android:text="Speaker"
+            android:textAlignment="center"
+            android:layout_gravity="center"/>
+
 </LinearLayout>

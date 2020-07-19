@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\0101\StudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
+8-->C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\0101\StudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
+9-->C:\Users\xenon\AndroidStudioProjects\AutoConspect\models\src\main\AndroidManifest.xml
 10
 11</manifest>

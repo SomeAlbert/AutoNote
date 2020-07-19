@@ -7,14 +7,19 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.gson.JsonParser
+
 import kotlinx.android.synthetic.main.activity_sr.*
+
 import org.kaldi.Assets
 import org.kaldi.Model
 import org.kaldi.RecognitionListener
-import org.kaldi.SpeechRecognizer
+import org.kaldi.SpkModel
+
 import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -22,20 +27,29 @@ import java.lang.ref.WeakReference
 
 class SRActivity : AppCompatActivity(), RecognitionListener {
     companion object {
-        const val TAG = "STT"
+        const val TAG = "AutoConspect"
         const val permissionRequestCode = 102
         const val STATE_START = 0
         const val STATE_READY = 1
         const val STATE_DONE = 2
         const val STATE_MIC = 3
+        var modelName = "rus"
+        var spkModelPath = "model-spk"
+        val models = mapOf(
+            "rus" to "model-small-ru",
+            "eng" to "model-android"
+        ) //add model here
     }
 
     init {
         System.loadLibrary("kaldi_jni")
     }
 
-    private var sr: SpeechRecognizer? = null
+    private var sr: SpkSpcRecognizer? = null
     private lateinit var model: Model
+    private lateinit var spkModel: SpkModel
+    var jsonParser = JsonParser()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +59,6 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         start_listener.setOnClickListener {
             recognizeMicro()
         }
-
         val permissionCheck =
             ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -55,9 +68,9 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
                 permissionRequestCode
             )
         }
-
         SetupTask(this).execute()
     }
+
 
     private class SetupTask(activity: SRActivity) : AsyncTask<Void, Void, Exception>() {
         var activityReference: WeakReference<SRActivity>? = null
@@ -71,10 +84,9 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
                 val assets = Assets(activityReference?.get())
                 val assetDir: File = assets.syncAssets()
                 Log.d(TAG, "Sync files in folder: $assetDir")
-
                 // Vosk.SetLogLevel(0)
-
-                activityReference?.get()?.model = Model("$assetDir/model-small-ru") //fixme model
+                activityReference?.get()?.model = Model("$assetDir/${models[modelName]}")
+                activityReference?.get()?.spkModel = SpkModel("$assetDir/$spkModelPath")
             } catch (e: IOException) {
                 return e
             }
@@ -90,7 +102,6 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
             }
         }
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -119,8 +130,14 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         sr?.shutdown()
     }
 
-    override fun onResult(p0: String?) {
-        speechView.append("$p0\n")
+    override fun onResult(p0: String?) { //fixme результат приходит в виде строчки, которая является json. Надо ее десериализовать и испольховать дальше
+        if (p0 != null) {
+            try {
+                speechView.append("$p0\n")
+            } catch (e: Exception) {
+                Toast.makeText(this@SRActivity, "$e", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onPartialResult(p0: String?) {}
@@ -139,12 +156,12 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     private fun setUiState(state: Int) {
         when (state) {
             STATE_START -> {
-                infoView.text = "Preparing the recognizer"
+                //infoView.text = "Preparing the recognizer"
                 speechView.movementMethod = ScrollingMovementMethod()
                 start_listener.isEnabled = false
             }
             STATE_READY -> {
-                infoView.text = "ready"
+                //infoView.text = "ready"
                 start_listener.text = "Recognize micro"
                 start_listener.isEnabled = true
             }
@@ -154,7 +171,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
             }
             STATE_MIC -> {
                 start_listener.text = "stop micro"
-                infoView.text = "Say something"
+                //infoView.text = "Say something"
                 start_listener.isEnabled = true
             }
         }
@@ -162,7 +179,6 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
 
     @SuppressLint("SetTextI18n")
     private fun setErrorState(message: String) {
-        infoView.text = message
         start_listener.text = "recognize micro"
         start_listener.isEnabled = false
     }
@@ -175,7 +191,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         } else {
             setUiState(STATE_MIC)
             try {
-                sr = SpeechRecognizer(model)
+                sr = SpkSpcRecognizer(model, spkModel)
                 sr?.addListener(this)
                 sr?.startListening()
             } catch (e: IOException) {

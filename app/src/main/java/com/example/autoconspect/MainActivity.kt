@@ -13,13 +13,13 @@ import java.lang.Math.abs
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     lateinit var gestureDetector: GestureDetector
-    var x2:Float = 0.0f
-    var x1:Float = 0.0f
-    var y2:Float = 0.0f
-    var y1:Float = 0.0f
+    var x2 = 0.0f
+    var x1 = 0.0f
+    var y2 = 0.0f
+    var y1 = 0.0f
 
     companion object {
-        const val MIN_DISTANCE = 150 // минимальная дистанция свайпа при которой произойдет регистрация нажатия
+        const val MIN_DISTANCE = 150 //fixme минимальная дистанция свайпа при которой произойдет регистрация нажатия
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,54 +29,40 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         gestureDetector = GestureDetector(this,this) // детектор свайпов
     }
     //определитель свайпов
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-
+    override fun onTouchEvent(event: MotionEvent?): Boolean { //fixme нормальные жесты
         gestureDetector.onTouchEvent(event)
          when (event?.action){
-             0-> // это начало свайпа
-             {
+             0 -> {// это начало свайпа
                  x1= event.x
                  y1= event.x
              }
-             1-> // это конец свайпа
-             {
+             1 -> { // это конец свайпа
                  x2=event.x
                  y2=event.y
-                  val valueX:Float = x2-x1
-                  val valueY:Float = y2-y1
-                 if (abs(valueX) > MIN_DISTANCE) {
-                     //(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ АБЦИСС)
-                      if ( x1 > x2) {
+                 val valueX = kotlin.math.abs(x2 - x1)
+                 val valueY = kotlin.math.abs(y2 - y1)
+                 if ((valueX > MIN_DISTANCE)){//(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ АБЦИСС)
+                      if ( x1 > x2) { //right swipe
                           val intent = Intent(this, ScrollingActivity:: class.java) //активация правого окна и переход
                           startActivity(intent)
-
-
-                 }
-                      //Детекция свайпа справо-налево
-                      else { Toast.makeText(this, " LEFT SWIPE", Toast.LENGTH_SHORT).show()
-             }
-
-         }
-                 //(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ ОРДИНАТ)
-                 else if( (abs(valueY)) > MIN_DISTANCE) {
-                     if (y2 < y1) { Toast.makeText(
-                         this, "SWIPE UP", Toast.LENGTH_SHORT).show()
+                    } else { //Детекция свайпа справо-налево
+                          Toast.makeText(this, " LEFT SWIPE", Toast.LENGTH_SHORT).show()
+                      }
+                 } //(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ ОРДИНАТ)
+                 else if ((valueY > MIN_DISTANCE)){
+                     if (y2 < y1) { //swipe up
+                         Toast.makeText(this, "SWIPE UP", Toast.LENGTH_SHORT).show()
                          startActivity(Intent(this, SRActivity::class.java))
-
                      }
-                 }
-                     else{ }
-
-
+                 } else { //swipe down
                  }
              }
-
+         }
         return super.onTouchEvent(event)
     }
 
 
 // Здесь ничего менять не нужно да и вообще оно не нужно, необходимо для реализации свайпов(жестов)
-
     override fun onShowPress(e: MotionEvent?) {
         //TODO("Not yet implemented") // To change body of created functions use the File | Settings | File Templates
 

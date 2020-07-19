@@ -27,3 +27,5 @@ model-small-ru/ivector/final.mat
 model-small-ru/ivector/global_cmvn.stats
 model-small-ru/ivector/online_cmvn.conf
 model-small-ru/ivector/splice.conf
+model-spk/final.ext.raw
+model-spk/mfcc.conf
