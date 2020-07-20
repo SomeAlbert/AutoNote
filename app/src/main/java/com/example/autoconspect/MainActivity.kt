@@ -8,6 +8,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sr.*
 import java.lang.Math.abs
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
@@ -19,7 +20,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     var y1 = 0.0f
 
     companion object {
-        const val MIN_DISTANCE = 150 //fixme минимальная дистанция свайпа при которой произойдет регистрация нажатия
+        const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         setContentView(R.layout.activity_main)
 
         gestureDetector = GestureDetector(this,this) // детектор свайпов
+
     }
     //определитель свайпов
     override fun onTouchEvent(event: MotionEvent?): Boolean { //fixme нормальные жесты
@@ -39,23 +42,30 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
              1 -> { // это конец свайпа
                  x2=event.x
                  y2=event.y
-                 val valueX = kotlin.math.abs(x2 - x1)
-                 val valueY = kotlin.math.abs(y2 - y1)
-                 if ((valueX > MIN_DISTANCE)){//(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ АБЦИСС)
-                      if ( x1 > x2) { //right swipe
-                          val intent = Intent(this, ScrollingActivity:: class.java) //активация правого окна и переход
-                          startActivity(intent)
-                    } else { //Детекция свайпа справо-налево
-                          Toast.makeText(this, " LEFT SWIPE", Toast.LENGTH_SHORT).show()
-                      }
-                 } //(ДЕТЕКЦИЯ СВАЙПОВ ПО ОСИ ОРДИНАТ)
-                 else if ((valueY > MIN_DISTANCE)){
-                     if (y2 < y1) { //swipe up
-                         Toast.makeText(this, "SWIPE UP", Toast.LENGTH_SHORT).show()
-                         startActivity(Intent(this, SRActivity::class.java))
+                 val valueX: Float = kotlin.math.abs(x2 - x1)
+                 val valueY: Float = kotlin.math.abs(y2 - y1)
+
+                     if ((valueX > valueY) && (valueX >  MIN_DISTANCE))  // ось абсцисс
+                     {
+                         if (x1 > x2)  // вправо
+                         {
+                             val intent = Intent(this, Scrollingactivity::class.java) //активация правого окна и переход
+                             startActivity(intent)
+                         } // вправо
+                         else
+                         {
+                             Toast.makeText(this, " LEFT SWIPE", Toast.LENGTH_SHORT).show()
+                         } // свайп влево
                      }
-                 } else { //swipe down
-                 }
+                     if ((abs(valueY) > valueX) && (valueY  >  MIN_DISTANCE) )  //ординат
+                     {
+
+
+                             Toast.makeText(this, "SWIPE DOWN", Toast.LENGTH_SHORT).show()
+                             startActivity(Intent(this, SRActivity::class.java))
+                          //вниз
+                     }
+
              }
          }
         return super.onTouchEvent(event)

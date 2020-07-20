@@ -7,20 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="->"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="298dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="221dp"
-        android:layout_height="24dp"
-        android:text="     SR ACTIVITY DOWN"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:background="#000000"
+        android:text="МИКРОФОН(ЯКОБЫ)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Scrollingactivity">
+
+
+    <Button
+        android:id="@+id/english2"
+        android:layout_width="318dp"
+        android:layout_height="106dp"
+        android:background="#DF4E4E"
+        android:backgroundTint="#C67F7F"
+        android:text="АНГЛИЙСКИЙ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/russian"
+        app:layout_constraintVertical_bias="0.061" />
+
+    <Button
+        android:id="@+id/lesson3"
+        android:layout_width="318dp"
+        android:layout_height="106dp"
+        android:background="#708BBA"
+        android:text="ПРЕДМЕТ 3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/english2"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <Button
+        android:id="@+id/russian"
+        android:layout_width="318dp"
+        android:layout_height="106dp"
+        android:background="#EDE1E1"
+        android:backgroundTint="#C89F9F"
+        android:text="РУССКИЙ ЯЗЫК"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
+</androidx.constraintlayout.widget.ConstraintLayout>
