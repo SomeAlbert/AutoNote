@@ -5,14 +5,14 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.os.Bundle
+import android.text.Editable
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.gson.JsonParser
-
+import com.google.gson.*
 import kotlinx.android.synthetic.main.activity_sr.*
 
 import org.kaldi.Assets
@@ -48,7 +48,9 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     private var sr: SpkSpcRecognizer? = null
     private lateinit var model: Model
     private lateinit var spkModel: SpkModel
-    var jsonParser = JsonParser()
+    private var gson = Gson()
+    var resultText = ""
+    var savePath: String? = null //fixme куда сохранять текст (по идее это пусть внутри приложения (не абсолютный), но это не точно
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,9 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         setUiState(STATE_START)
         start_listener.setOnClickListener {
             recognizeMicro()
+        }
+        saveFile.setOnClickListener {
+            saveFile()
         }
         val permissionCheck =
             ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
@@ -130,10 +135,28 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         sr?.shutdown()
     }
 
-    override fun onResult(p0: String?) { //fixme результат приходит в виде строчки, которая является json. Надо ее десериализовать и испольховать дальше
+    override fun onResult(p0: String?) {
         if (p0 != null) {
             try {
-                speechView.append("$p0\n")
+                val json = gson.fromJson(p0, JsonObject::class.java)
+                val text = json.get("text").asString
+                val spk = json.get("spk").asJsonArray.toMutableList()
+                var spkSum  = 0f
+//                val result = if (json.has("result")) json.get("result").asJsonArray[0].asJsonObject else null
+//                if ((result != null) && (resultText != "")) {
+//                    speechView.setText(speechView.text.replace(Regex("$resultText(\\s|\\s\\s|\\s\\s\\s)*\$"), "  ${result.get("word").asString}")) //fixme result
+//                } else {
+//                    speechView.append(text)
+//                    resultText += "$text "
+//                    infoView.text = resultText
+//                }
+                speechView.append(" $text")
+                for (i in spk){
+                    spkSum += i.asFloat
+                }
+                val spkMean = spkSum / spk.size
+                spkInfo.text = "Speaker mean: $spkMean"
+                //speechView.append("$p0\n")
             } catch (e: Exception) {
                 Toast.makeText(this@SRActivity, "$e", Toast.LENGTH_SHORT).show()
             }
@@ -183,7 +206,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         start_listener.isEnabled = false
     }
 
-    private fun recognizeMicro() {
+    fun recognizeMicro() {
         if (sr != null) {
             setUiState(STATE_DONE)
             sr?.cancel()
@@ -197,6 +220,14 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
             } catch (e: IOException) {
                 e.message?.let { setErrorState(it) }
             }
+        }
+    }
+
+    fun saveFile() {
+        if (savePath != null) {
+            File(savePath.toString()).writeText(speechView.text.toString())
+        } else {
+            Toast.makeText(this@SRActivity, "Wrong save path", Toast.LENGTH_SHORT).show()
         }
     }
 
