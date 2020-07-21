@@ -1,15 +1,16 @@
 package com.example.autoconspect
 
-import android.content.Context
+
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_sr.*
 import java.lang.Math.abs
+
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
@@ -28,6 +29,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        micro.setOnClickListener {
+            val animation = AnimationUtils.loadAnimation(this, R.anim.scale)
+            micro.startAnimation(animation)
+        }
         gestureDetector = GestureDetector(this,this) // детектор свайпов
 
     }
