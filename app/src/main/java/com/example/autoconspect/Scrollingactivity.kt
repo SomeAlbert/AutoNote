@@ -13,9 +13,8 @@ class Scrollingactivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scrollingactivity)
         russian.setOnClickListener {
-
-            val animation = AnimationUtils.loadAnimation(this, R.anim.etransparency)
-            russian.startAnimation(animation)
+            val animation = AnimationUtils.loadAnimation(this, R.anim.elevate)
+            imageView.startAnimation(animation)
             val intent = Intent(this, LessonbaseActivity::class.java) //база кнспектов
             startActivity(intent)
         }

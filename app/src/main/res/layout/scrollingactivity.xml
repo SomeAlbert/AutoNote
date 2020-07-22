@@ -18,8 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/russian"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.042" />
 
     <Button
         android:id="@+id/lesson3"
@@ -32,19 +32,43 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/english2"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.111" />
 
-    <Button
-        android:id="@+id/russian"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="318dp"
-        android:layout_height="106dp"
-        android:background="#EDE1E1"
-        android:backgroundTint="#C89F9F"
-        android:text="РУССКИЙ ЯЗЫК"
+        android:layout_height="107dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.08">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/russian" />
+
+        <Button
+            android:id="@+id/russian"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="318dp"
+            android:layout_height="106dp"
+            android:alpha="10"
+            android:backgroundTintMode="src_atop"
+            android:text="РУССКИЙ ЯЗЫК"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+            app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout"
+            app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lessons">
+        <item> НЕ ВЫБРАНО</item>
+        <item> Русский язык </item>
+        <item> Английский язык</item>
+        <item> ПРЕДМЕТ3</item>
+    </string-array>
+</resources>

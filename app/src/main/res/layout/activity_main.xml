@@ -19,5 +19,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/micro" />
+        app:srcCompat="@drawable/micro"
+        tools:srcCompat="@drawable/micro" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="211dp"
+        android:layout_height="26dp"
+        android:background="#DAD8D8"
+        android:entries="@array/lessons"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/micro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
