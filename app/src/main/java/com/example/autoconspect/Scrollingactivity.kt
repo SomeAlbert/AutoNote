@@ -11,9 +11,9 @@ class Scrollingactivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scrollingactivity)
-        eng.setOnClickListener {
+        russian.setOnClickListener {
             val animation = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            engView.startAnimation(animation)
+            imageView.startAnimation(animation)
             val intent = Intent(this, LessonbaseActivity::class.java) //база кнспектов
             startActivity(intent)
         }
