@@ -7,35 +7,39 @@
     tools:context=".Scrollingactivity">
 
 
-    <Button
-        android:id="@+id/english2"
+    <FrameLayout
+        android:id="@+id/frameenglish"
         android:layout_width="318dp"
-        android:layout_height="106dp"
-        android:background="#DF4E4E"
-        android:backgroundTint="#C67F7F"
-        android:text="АНГЛИЙСКИЙ"
+        android:layout_height="107dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintTop_toBottomOf="@+id/framelayout"
+        app:layout_constraintVertical_bias="0.057">
 
-    <Button
-        android:id="@+id/lesson3"
-        android:layout_width="318dp"
-        android:layout_height="106dp"
-        android:background="#708BBA"
-        android:text="ПРЕДМЕТ 3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/english2"
-        app:layout_constraintVertical_bias="0.111" />
+        <ImageView
+            android:id="@+id/engView"
+            android:layout_width="321dp"
+            android:layout_height="106dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/english" />
+
+        <Button
+            android:id="@+id/eng"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="318dp"
+            android:layout_height="106dp"
+            android:alpha="10"
+            android:backgroundTintMode="src_atop"
+            android:text="АНГЛИЙСКИЙ ЯЗЫК"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="25sp" />
+    </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/framelayout"
         android:layout_width="318dp"
         android:layout_height="107dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,11 +67,11 @@
             android:textColor="#FFFFFF"
             android:textColorHighlight="#FFFFFF"
             android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-            app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+            app:layout_constraintBottom_toBottomOf="@+id/frameenglish"
+            app:layout_constraintEnd_toEndOf="@+id/frameenglish"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/frameLayout"
-            app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+            app:layout_constraintStart_toStartOf="@+id/frameenglish"
+            app:layout_constraintTop_toTopOf="@+id/frameenglish" />
     </FrameLayout>
 
 
