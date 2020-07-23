@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         micro.setOnClickListener {
             val animation = AnimationUtils.loadAnimation(this, R.anim.scale)
             micro.startAnimation(animation)
+            val animation1 =  AnimationUtils.loadAnimation(this, R.anim.redwater)
+            circlebg.startAnimation(animation1)
+            val animation2 =AnimationUtils.loadAnimation(this, R.anim.redwaterb)
+            circleb.startAnimation(animation2)
+            val animation3 =AnimationUtils.loadAnimation(this, R.anim.redwaterb)
+            circlebg.startAnimation(animation3)
         }
         gestureDetector = GestureDetector(this,this) // детектор свайпов
 
