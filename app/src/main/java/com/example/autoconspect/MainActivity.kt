@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Math.abs
 
 
+
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     lateinit var gestureDetector: GestureDetector
@@ -65,14 +66,16 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                          } // вправо
                          else
                          {
+
                              Toast.makeText(this, " LEFT SWIPE", Toast.LENGTH_SHORT).show()
+                             startActivity(Intent(this, LessonbaseActivity::class.java))
                          } // свайп влево
                      }
                      if ((abs(valueY) > valueX) && (valueY  >  MIN_DISTANCE) )  //ординат
                      {
 
 
-                             Toast.makeText(this, "SWIPE DOWN", Toast.LENGTH_SHORT).show()
+                             //Toast.makeText(this, "SWIPE DOWN", Toast.LENGTH_SHORT).show()
                              startActivity(Intent(this, SRActivity::class.java))
                           //вниз
                      }

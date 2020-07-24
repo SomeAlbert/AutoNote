@@ -5,21 +5,20 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.os.Bundle
-import android.text.Editable
+import android.os.Environment
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_sr.*
-
 import org.kaldi.Assets
 import org.kaldi.Model
 import org.kaldi.RecognitionListener
 import org.kaldi.SpkModel
-
 import java.io.File
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -50,7 +49,8 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     private lateinit var spkModel: SpkModel
     private var gson = Gson()
     var resultText = ""
-    var savePath: String? = null //fixme куда сохранять текст (по идее это пусть внутри приложения (не абсолютный), но это не точно
+    var savePath = Environment.getDataDirectory()
+    //fixme куда сохранять текст (по идее это пусть внутри приложения (не абсолютный), но это не точно
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +141,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
                 val json = gson.fromJson(p0, JsonObject::class.java)
                 val text = json.get("text").asString
                 val spk = json.get("spk").asJsonArray.toMutableList()
-                var spkSum  = 0f
+                var spkSum = 0f
 //                val result = if (json.has("result")) json.get("result").asJsonArray[0].asJsonObject else null
 //                if ((result != null) && (resultText != "")) {
 //                    speechView.setText(speechView.text.replace(Regex("$resultText(\\s|\\s\\s|\\s\\s\\s)*\$"), "  ${result.get("word").asString}")) //fixme result
@@ -151,7 +151,7 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
 //                    infoView.text = resultText
 //                }
                 speechView.append(" $text")
-                for (i in spk){
+                for (i in spk) {
                     spkSum += i.asFloat
                 }
                 val spkMean = spkSum / spk.size
@@ -224,10 +224,19 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     }
 
     fun saveFile() {
-        if (savePath != null) {
-            File(savePath.toString()).writeText(speechView.text.toString())
-        } else {
-            Toast.makeText(this@SRActivity, "Wrong save path", Toast.LENGTH_SHORT).show()
+        try {
+            for (dirName in models.keys) {
+                    val f = File(savePath, dirName)
+                    f.mkdir()
+
+            }
+            val dir = File(savePath, modelName)
+            val size = dir.listFiles()?.size ?: 0
+            val fileName = (size + 1).toString()
+            File(dir, fileName).printWriter().use { it.write(speechView.text.toString())
+            } //writeText(speechView.text.toString())
+        } catch (e:Exception) {
+            Toast.makeText(this@SRActivity, "$e", Toast.LENGTH_SHORT).show()
         }
     }
 

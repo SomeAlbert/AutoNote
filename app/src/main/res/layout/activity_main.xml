@@ -18,6 +18,15 @@
         app:layout_constraintStart_toStartOf="@+id/micro"
         app:layout_constraintTop_toTopOf="@+id/micro"
         app:srcCompat="@drawable/circle" />
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        style='@style/Widget.MaterialComponents.Button.OutlinedButton'>-->
+<!--        <AutoCompleteTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:inputType=""-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <Spinner
         android:id="@+id/spinner"
