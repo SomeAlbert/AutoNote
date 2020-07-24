@@ -9,72 +9,72 @@
 
     <Button
         android:id="@+id/start_listener"
-        android:layout_width="204dp"
-        android:layout_height="50dp"
+        android:layout_width="158dp"
+        android:layout_height="46dp"
         android:layout_gravity="center_horizontal"
         android:background="#D57373"
         android:text="start recording"
+        app:layout_constraintBottom_toTopOf="@+id/speechView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/saveFile"
+        android:layout_width="157dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="12dp"
+        android:background="#B1DC70"
+        android:text="Save file"
+        app:layout_constraintBottom_toTopOf="@+id/speechView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/start_listener"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.993" />
+
+    <EditText
+        android:id="@+id/speechView"
+        android:layout_width="414dp"
+        android:layout_height="307dp"
+        android:text=""
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.498" />
 
-    <Button
-        android:id="@+id/saveFile"
-        android:layout_width="177dp"
-        android:layout_height="51dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="12dp"
-        android:background="#B1DC70"
-        android:text="Save file"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/infoView"
+        android:layout_width="156dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp"
+        android:text="Info"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/saveFile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/start_listener"
+        app:layout_constraintHorizontal_bias="0.979"
+        app:layout_constraintStart_toEndOf="@+id/spkInfo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047" />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="339dp"
-        android:layout_height="733dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.778">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/speechView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center" />
-    </ScrollView>
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/spkInfo"
-        android:layout_width="202dp"
-        android:layout_height="38dp"
+        android:layout_width="154dp"
+        android:layout_height="44dp"
         android:layout_gravity="center"
         android:text="Speaker"
         android:textAlignment="center"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/infoView"
-        android:layout_width="176dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center"
-        android:text="Info"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/start_listener"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

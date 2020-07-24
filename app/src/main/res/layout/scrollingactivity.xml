@@ -4,75 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:minWidth="330dp"
+    android:minHeight="70dp"
     tools:context=".Scrollingactivity">
 
 
-    <FrameLayout
-        android:id="@+id/frameenglish"
-        android:layout_width="318dp"
-        android:layout_height="107dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="130dp"
+        android:layout_height="36dp"
+        android:text="Предметы"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/framelayout"
-        app:layout_constraintVertical_bias="0.057">
-
-        <ImageView
-            android:id="@+id/engView"
-            android:layout_width="321dp"
-            android:layout_height="106dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/english" />
-
-        <Button
-            android:id="@+id/eng"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="318dp"
-            android:layout_height="106dp"
-            android:alpha="10"
-            android:backgroundTintMode="src_atop"
-            android:text="АНГЛИЙСКИЙ ЯЗЫК"
-            android:textColor="#FFFFFF"
-            android:textColorHighlight="#FFFFFF"
-            android:textSize="25sp" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/framelayout"
-        android:layout_width="318dp"
-        android:layout_height="107dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08">
+        app:layout_constraintVertical_bias="0.023" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/russian" />
+    <Button
+        android:id="@+id/russian"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="311dp"
+        android:layout_height="79dp"
+        android:alpha="10"
 
-        <Button
-            android:id="@+id/russian"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="318dp"
-            android:layout_height="106dp"
-            android:alpha="10"
-            android:backgroundTintMode="src_atop"
-            android:text="РУССКИЙ ЯЗЫК"
-            android:textColor="#FFFFFF"
-            android:textColorHighlight="#FFFFFF"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/frameenglish"
-            app:layout_constraintEnd_toEndOf="@+id/frameenglish"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/frameenglish"
-            app:layout_constraintTop_toTopOf="@+id/frameenglish" />
-    </FrameLayout>
+        android:backgroundTintMode="src_atop"
+        android:drawableLeft="@drawable/rusS"
+        android:elevation="35dp"
+        android:minWidth="318dp"
+        android:minHeight="106dp"
+        android:scaleType="centerCrop"
+        android:text="РУССКИЙ ЯЗЫК"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.415"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.181" />
+
+    <Button
+        android:id="@+id/eng"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="311dp"
+        android:layout_height="76dp"
+        android:alpha="10"
+
+        android:backgroundTintMode="src_atop"
+        android:drawableLeft="@drawable/britishS"
+        android:elevation="35dp"
+        android:minWidth="318dp"
+        android:minHeight="106dp"
+        android:scaleType="centerCrop"
+        android:text="АНГЛИЙСКИЙ ЯЗЫК"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.415"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.372" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
