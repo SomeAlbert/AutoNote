@@ -21,6 +21,7 @@ import org.kaldi.RecognitionListener
 import org.kaldi.SpkModel
 import java.io.File
 import java.io.IOException
+import java.lang.ref.SoftReference
 import java.lang.ref.WeakReference
 
 
@@ -40,20 +41,21 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         ) //add model here
     }
 
-    init {
-        System.loadLibrary("kaldi_jni")
-    }
-
     private var sr: SpkSpcRecognizer? = null
+
     private lateinit var model: Model
     private lateinit var spkModel: SpkModel
     private var gson = Gson()
-    var resultText = ""
-    var savePath = Environment.getDataDirectory()
+    var savePath: File? = null
+    lateinit var activityReference: SoftReference<SRActivity>
     //fixme куда сохранять текст (по идее это пусть внутри приложения (не абсолютный), но это не точно
+    init {
+        System.loadLibrary("kaldi_jni")
+
+    }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sr)
 
@@ -64,34 +66,32 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         saveFile.setOnClickListener {
             saveFile()
         }
-        val permissionCheck =
-            ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                permissionRequestCode
-            )
-        }
+
+        checkPermissions()
+
+        activityReference = SoftReference<SRActivity>(this)
+        savePath = activityReference.get()?.applicationContext?.dataDir
+
+        //if (savePath?.exists() == false) { this.savePath!!.mkdir()}
         SetupTask(this).execute()
     }
 
 
-    private class SetupTask(activity: SRActivity) : AsyncTask<Void, Void, Exception>() {
-        var activityReference: WeakReference<SRActivity>? = null
+    private inner class SetupTask(activity: SRActivity) : AsyncTask<Void, Void, Exception>() {
+        var activityReferenceWeak: WeakReference<SRActivity>? = null
 
         init {
-            this.activityReference = WeakReference<SRActivity>(activity)
+            activityReferenceWeak = WeakReference<SRActivity>(activity)
         }
 
         override fun doInBackground(vararg params: Void?): Exception? {
             try {
-                val assets = Assets(activityReference?.get())
+                val assets = Assets(activityReferenceWeak?.get())
                 val assetDir: File = assets.syncAssets()
                 Log.d(TAG, "Sync files in folder: $assetDir")
                 // Vosk.SetLogLevel(0)
-                activityReference?.get()?.model = Model("$assetDir/${models[modelName]}")
-                activityReference?.get()?.spkModel = SpkModel("$assetDir/$spkModelPath")
+                activityReferenceWeak?.get()?.model = Model("$assetDir/${models[modelName]}")
+                activityReferenceWeak?.get()?.spkModel = SpkModel("$assetDir/$spkModelPath")
             } catch (e: IOException) {
                 return e
             }
@@ -100,10 +100,10 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
 
         override fun onPostExecute(result: Exception?) {
             if (result != null) {
-                activityReference?.get()
+                activityReferenceWeak?.get()
                     ?.setErrorState("Failed to initialize the recognizer $result")
             } else run {
-                activityReference?.get()?.setUiState(STATE_READY)
+                activityReferenceWeak?.get()?.setUiState(STATE_READY)
             }
         }
     }
@@ -206,6 +206,17 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         start_listener.isEnabled = false
     }
 
+    private fun checkPermissions() {
+        val permissionCheck =
+            ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                permissionRequestCode
+            )
+        }
+    }
     fun recognizeMicro() {
         if (sr != null) {
             setUiState(STATE_DONE)
@@ -227,14 +238,15 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         try {
             for (dirName in models.keys) {
                     val f = File(savePath, dirName)
-                    f.mkdir()
-
+                if (!f.exists()) {f.mkdir()}
             }
             val dir = File(savePath, modelName)
             val size = dir.listFiles()?.size ?: 0
-            val fileName = (size + 1).toString()
-            File(dir, fileName).printWriter().use { it.write(speechView.text.toString())
-            } //writeText(speechView.text.toString())
+            val fileName = (size + 1).toString() + ".txt"
+            val fileToSave = File(dir, fileName)
+            fileToSave.writeText(speechView.text.toString()) // it.write(speechView.text.toString())
+            Toast.makeText(this@SRActivity, "Text saved to ${fileToSave.absolutePath}", Toast.LENGTH_SHORT).show()
+             //writeText(speechView.text.toString())
         } catch (e:Exception) {
             Toast.makeText(this@SRActivity, "$e", Toast.LENGTH_SHORT).show()
         }

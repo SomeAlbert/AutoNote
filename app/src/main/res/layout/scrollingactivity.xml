@@ -32,7 +32,7 @@
         android:alpha="10"
 
         android:backgroundTintMode="src_atop"
-        android:drawableLeft="@drawable/rus"
+        android:drawableLeft="@drawable/rus_s"
         android:elevation="35dp"
         android:minWidth="318dp"
         android:minHeight="106dp"
@@ -57,7 +57,7 @@
         android:alpha="10"
 
         android:backgroundTintMode="src_atop"
-        android:drawableLeft="@drawable/british"
+        android:drawableLeft="@drawable/british_s"
         android:elevation="35dp"
         android:minWidth="318dp"
         android:minHeight="106dp"
