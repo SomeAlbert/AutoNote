@@ -9,11 +9,14 @@ import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,7 +32,7 @@ import java.lang.Math.abs
 import java.lang.ref.SoftReference
 
 
-class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener {
+class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener, AdapterView.OnItemSelectedListener{
 
     companion object {
         const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
@@ -65,7 +68,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     private var gson = Gson()
     var savePath: File? = null
     lateinit var activityReference: SoftReference<MainActivity>
-
     lateinit var gestureDetector: GestureDetector
     var x2 = 0.0f
     var x1 = 0.0f
@@ -91,6 +93,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         }
         checkPermissions()
 
+        activityReference = SoftReference<MainActivity>(this)
+        savePath = activityReference.get()?.applicationContext?.dataDir
+
         micro.setOnClickListener {
             val animation = AnimationUtils.loadAnimation(this, R.anim.scale)
             micro.startAnimation(animation)
@@ -103,10 +108,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         }
         gestureDetector = GestureDetector(this, this) // детектор свайпов
 
-        activityReference = SoftReference<MainActivity>(this)
-        savePath = activityReference.get()?.applicationContext?.dataDir
-
         SetupTask(this).execute()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        spinner.onItemSelectedListener = this
 
     }
 
@@ -287,11 +296,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
     fun saveFile() {
         try {
-            for (dirName in SRActivity.subjects.keys) {
+            for (dirName in subjects.keys) {
                 val f = File(savePath, dirName)
                 if (!f.exists()) {f.mkdir()}
             }
-            val dir = File(savePath, SRActivity.subjectName)
+            val dir = File(savePath, subjectName)
             val size = dir.listFiles()?.size ?: 0
             val fileName = (size + 1).toString() + ".txt"
             val fileToSave = File(dir, fileName)
@@ -301,6 +310,30 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         } catch (e:Exception) {
             Toast.makeText(this@MainActivity, "$e", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        subjectName = subjects.keys.toList()[position]
+        modelName = subjects[subjectName].toString()
+        MaterialAlertDialogBuilder(this)
+            .setMessage(resources.getString(R.string.clear_text))
+            .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                sr?.cancel()
+                SetupTask(this).execute()
+                recognizeMicro()
+            }
+            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                saveFile()
+                speechView.setText(" ")
+                sr?.cancel()
+                SetupTask(this).execute()
+                recognizeMicro()
+            }
+            .show()
+        // fixme должно вылезти окошко и спросить: очистить окно ввода?
+
     }
 
 }

@@ -20,10 +20,10 @@ class SetupTask(activity: MainActivity) : AsyncTask<Void, Void, Exception>() {
         try {
             val assets = Assets(activityReferenceWeak?.get())
             val assetDir: File = assets.syncAssets()
-            Log.d(SRActivity.TAG, "Sync files in folder: $assetDir")
+            Log.d(MainActivity.TAG, "Sync files in folder: $assetDir")
             // Vosk.SetLogLevel(0)
-            activityReferenceWeak?.get()?.model = Model("$assetDir/${SRActivity.models[SRActivity.modelName]}")
-            activityReferenceWeak?.get()?.spkModel = SpkModel("$assetDir/${SRActivity.spkModelPath}")
+            activityReferenceWeak?.get()?.model = Model("$assetDir/${MainActivity.models[MainActivity.modelName]}")
+            activityReferenceWeak?.get()?.spkModel = SpkModel("$assetDir/${MainActivity.spkModelPath}")
         } catch (e: IOException) {
             return e
         }
@@ -35,7 +35,7 @@ class SetupTask(activity: MainActivity) : AsyncTask<Void, Void, Exception>() {
             activityReferenceWeak?.get()
                 ?.setErrorState("Failed to initialize the recognizer $result")
         } else run {
-            activityReferenceWeak?.get()?.setUiState(SRActivity.STATE_READY)
+            activityReferenceWeak?.get()?.setUiState(MainActivity.STATE_READY)
         }
     }
 }

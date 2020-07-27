@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">AutoConspect</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="large_text">
+    <string name="app_name" translatable="false">AutoConspect</string>
+    <string name="title_activity_scrolling" translatable="false">ScrollingActivity</string>
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -97,6 +97,9 @@
     <string name="start_recognizing">Start recognizing</string>
     <string name="stop_recognizing">Stop</string>
     <string name="save_file">Save</string>
+    <string name="clear_text">Clear text?</string>
+    <string name="accept">Yes</string>
+    <string name="decline">No</string>
     <string-array name="subject_names">
         <item>"Russian"</item>
         <item>"English"</item>
