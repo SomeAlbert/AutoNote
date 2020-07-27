@@ -7,72 +7,35 @@
     android:background="#FFFFFF"
     android:minWidth="330dp"
     android:minHeight="70dp"
-    tools:context=".Scrollingactivity">
+    tools:context=".ScrollingActivity">
 
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="130dp"
-        android:layout_height="36dp"
-        android:text="Предметы"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="46dp"
+        android:text="@string/subjects_string"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/subjectsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/subjectsList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <Button
-        android:id="@+id/russian"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="311dp"
-        android:layout_height="79dp"
-        android:alpha="10"
-
-        android:backgroundTintMode="src_atop"
-        android:drawableLeft="@drawable/rus_s"
-        android:elevation="35dp"
-        android:minWidth="318dp"
-        android:minHeight="106dp"
-        android:scaleType="centerCrop"
-        android:text="РУССКИЙ ЯЗЫК"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181" />
-
-    <Button
-        android:id="@+id/eng"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="311dp"
-        android:layout_height="76dp"
-        android:alpha="10"
-
-        android:backgroundTintMode="src_atop"
-        android:drawableLeft="@drawable/british_s"
-        android:elevation="35dp"
-        android:minWidth="318dp"
-        android:minHeight="106dp"
-        android:scaleType="centerCrop"
-        android:text="АНГЛИЙСКИЙ ЯЗЫК"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

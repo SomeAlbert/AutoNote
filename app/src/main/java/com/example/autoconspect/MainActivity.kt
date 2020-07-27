@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                      {
                          if (x1 > x2)  // вправо
                          {
-                             val intent = Intent(this, Scrollingactivity::class.java) //активация правого окна и переход
+                             val intent = Intent(this, ScrollingActivity::class.java) //активация правого окна и переход
                              startActivity(intent)
                          } // вправо
                          else

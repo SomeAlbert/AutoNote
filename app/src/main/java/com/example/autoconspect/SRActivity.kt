@@ -34,11 +34,22 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         const val STATE_DONE = 2
         const val STATE_MIC = 3
         var modelName = "rus"
+        var subjectName = "russian"
         var spkModelPath = "model-spk"
-        val models = mapOf(
+
+        //add models here ( {model short name} to {model folder name} )
+        var models = mutableMapOf(
             "rus" to "model-small-ru",
             "eng" to "model-android"
-        ) //add model here
+        )
+
+        // ОЧЕНЬ ВАЖНО !!
+        // Индекс здесь должен соответствовать индексу в strings.xml/subject_names
+        //add subjects here ( {subject name} to {model short name} )
+        var subjects = mutableMapOf(
+            "russian" to "rus",
+            "english" to "eng"
+        )
     }
 
     private var sr: SpkSpcRecognizer? = null
@@ -48,12 +59,10 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     private var gson = Gson()
     var savePath: File? = null
     lateinit var activityReference: SoftReference<SRActivity>
-    //fixme куда сохранять текст (по идее это пусть внутри приложения (не абсолютный), но это не точно
     init {
         System.loadLibrary("kaldi_jni")
 
     }
-
 
     override  fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,12 +81,11 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         activityReference = SoftReference<SRActivity>(this)
         savePath = activityReference.get()?.applicationContext?.dataDir
 
-        //if (savePath?.exists() == false) { this.savePath!!.mkdir()}
         SetupTask(this).execute()
     }
 
 
-    private inner class SetupTask(activity: SRActivity) : AsyncTask<Void, Void, Exception>() {
+    private class SetupTask(activity: SRActivity) : AsyncTask<Void, Void, Exception>() {
         var activityReferenceWeak: WeakReference<SRActivity>? = null
 
         init {
@@ -175,7 +183,6 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
         setUiState(STATE_READY)
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setUiState(state: Int) {
         when (state) {
             STATE_START -> {
@@ -185,24 +192,23 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
             }
             STATE_READY -> {
                 //infoView.text = "ready"
-                start_listener.text = "Recognize micro"
+                start_listener.text = resources.getString(R.string.start_recognizing)
                 start_listener.isEnabled = true
             }
             STATE_DONE -> {
-                start_listener.text = "recognize micro"
+                start_listener.text = resources.getString(R.string.start_recognizing)
                 start_listener.isEnabled = true
             }
             STATE_MIC -> {
-                start_listener.text = "stop micro"
+                start_listener.text = resources.getString(R.string.stop_recognizing)
                 //infoView.text = "Say something"
                 start_listener.isEnabled = true
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setErrorState(message: String) {
-        start_listener.text = "recognize micro"
+        start_listener.text = resources.getString(R.string.start_recognizing)
         start_listener.isEnabled = false
     }
 
@@ -236,11 +242,11 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
 
     fun saveFile() {
         try {
-            for (dirName in models.keys) {
+            for (dirName in subjects.keys) {
                     val f = File(savePath, dirName)
                 if (!f.exists()) {f.mkdir()}
             }
-            val dir = File(savePath, modelName)
+            val dir = File(savePath, subjectName)
             val size = dir.listFiles()?.size ?: 0
             val fileName = (size + 1).toString() + ".txt"
             val fileToSave = File(dir, fileName)

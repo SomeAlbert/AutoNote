@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Scrollingactivity"></activity>
+        <activity android:name=".ReadLesson"></activity>
         <activity android:name=".LessonbaseActivity" />
         <activity
             android:name=".ScrollingActivity"
@@ -25,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SRActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".SRActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
