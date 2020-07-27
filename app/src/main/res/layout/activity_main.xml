@@ -9,6 +9,56 @@
     tools:context=".MainActivity">
 
 
+    <Button
+        android:id="@+id/start_listener"
+        android:layout_width="158dp"
+        android:layout_height="46dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="11dp"
+        android:background="#D57373"
+        android:text="@string/start_recognizing"
+        app:layout_constraintStart_toStartOf="@+id/speechView"
+        app:layout_constraintTop_toBottomOf="@+id/speechView" />
+
+
+    <Button
+        android:id="@+id/saveFile"
+        android:layout_width="157dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#B1DC70"
+        android:text="@string/save_file"
+        app:layout_constraintBottom_toTopOf="@+id/start_listener"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toEndOf="@+id/start_listener"
+        app:layout_constraintTop_toBottomOf="@+id/start_listener" />
+
+    <TextView
+        android:id="@+id/spkInfo"
+        android:layout_width="154dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:text="Speaker"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/speechView"
+        android:layout_width="match_parent"
+        android:layout_height="491dp"
+        android:layout_marginTop="23dp"
+        android:text="@string/large_text"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
     <ImageView
         android:id="@+id/circlebg"
         android:layout_width="258dp"
@@ -18,22 +68,13 @@
         app:layout_constraintStart_toStartOf="@+id/micro"
         app:layout_constraintTop_toTopOf="@+id/micro"
         app:srcCompat="@drawable/circle" />
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        style='@style/Widget.MaterialComponents.Button.OutlinedButton'>-->
-<!--        <AutoCompleteTextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType=""-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="211dp"
         android:layout_height="26dp"
         android:background="#DAD8D8"
-        android:entries="@array/lessons"
+        android:entries="@array/subject_names"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/micro"
         app:layout_constraintEnd_toEndOf="parent"

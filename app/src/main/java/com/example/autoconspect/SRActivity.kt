@@ -53,7 +53,6 @@ class SRActivity : AppCompatActivity(), RecognitionListener {
     }
 
     private var sr: SpkSpcRecognizer? = null
-
     private lateinit var model: Model
     private lateinit var spkModel: SpkModel
     private var gson = Gson()
