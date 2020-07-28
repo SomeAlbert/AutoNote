@@ -14,5 +14,11 @@
             android:repeatMode="reverse"
             android:fillAfter="true"
             android:ordering="sequentially"/>
+        <alpha
+            android:duration="450"
+            android:fromAlpha="1.0"
+            android:toAlpha="0.0"
+
+            />
     </set>
 </set>
