@@ -2,6 +2,7 @@ package com.example.autoconspect
 
 
 import android.Manifest
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,22 +19,18 @@ import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.speechView
-import kotlinx.android.synthetic.main.activity_main.spkInfo
-import kotlinx.android.synthetic.main.activity_main.start_listener
 import org.kaldi.Model
 import org.kaldi.RecognitionListener
 import org.kaldi.SpkModel
 import java.io.File
 import java.io.IOException
-import java.lang.Math.abs
 import java.lang.ref.SoftReference
 
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener {
 
-    companion object {
-        const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
+        companion object {
+            const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
         const val TAG = "AutoConspect"
         const val permissionRequestCode = 102
         const val STATE_START = 0
@@ -95,12 +93,33 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             val animation = AnimationUtils.loadAnimation(this, R.anim.scale)
             micro.startAnimation(animation)
             val animation1 = AnimationUtils.loadAnimation(this, R.anim.redwater)
-            circlebg.startAnimation(animation1)
+            circles.startAnimation(animation1)
             val animation2 = AnimationUtils.loadAnimation(this, R.anim.redwaterb)
             circleb.startAnimation(animation2)
             val animation3 = AnimationUtils.loadAnimation(this, R.anim.redwaterb)
             circlebg.startAnimation(animation3)
+            micro.visibility = View.GONE;
+            circlebg.visibility = View.GONE;
+            circles.visibility = View.GONE;
+            circleb.visibility = View.GONE;
+
+            spinner.visibility = View.GONE;
+            guideline3.visibility = View.VISIBLE;
+            spkInfo.visibility = View.VISIBLE;
+            val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
+            saveFile.visibility = View.VISIBLE;
+            saveFile.startAnimation(animation4)
+            val animation5 = AnimationUtils.loadAnimation(this, R.anim.elevate)
+            start_listener.visibility = View.VISIBLE;
+            start_listener.startAnimation(animation5)
+            scrollView2.visibility = View.VISIBLE
+            val animation6 = AnimationUtils.loadAnimation(this, R.anim.alpha)
+            speechView.visibility = View.VISIBLE;
+            speechView.startAnimation(animation6)
+
+
         }
+
         gestureDetector = GestureDetector(this, this) // детектор свайпов
 
         activityReference = SoftReference<MainActivity>(this)
@@ -120,12 +139,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             }
             1 -> { // это конец свайпа
                 x2 = event.x
-                y2 = event.y
                 val valueX: Float = kotlin.math.abs(x2 - x1)
-                val valueY: Float = kotlin.math.abs(y2 - y1)
 
-                if ((valueX > valueY) && (valueX > MIN_DISTANCE))  // ось абсцисс
-                {
+                if(valueX > MIN_DISTANCE){
                     if (x1 > x2)  // вправо
                     {
                         val intent = Intent(
