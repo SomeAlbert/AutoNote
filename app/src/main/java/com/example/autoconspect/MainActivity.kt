@@ -39,23 +39,20 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         const val STATE_READY = 1
         const val STATE_DONE = 2
         const val STATE_MIC = 3
-        var modelName = "rus"
-        var subjectName = "russian"
+        var modelId = 0
+        var subjectId = 0
         var spkModelPath = "model-spk"
 
-        //add models here ( {model short name} to {model folder name} )
-        var models = mutableMapOf(
-            "rus" to "model-small-ru",
-            "eng" to "model-android"
+        //add models here ( [model index] : model folder name )
+        var models = mutableListOf(
+             "model-small-ru",
+             "model-android"
         )
 
         // ОЧЕНЬ ВАЖНО !!
         // Индекс здесь должен соответствовать индексу в strings.xml/subject_names
-        //add subjects here ( {subject name} to {model short name} )
-        var subjects = mutableMapOf(
-            "russian" to "rus",
-            "english" to "eng"
-        )
+        //add subjects here ( [subject index] : model index )
+        var subjects = mutableListOf(0, 1)
 
     }
 
@@ -88,6 +85,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         saveFile.setOnClickListener {
             saveFile()
         }
+        editSubjects.setOnClickListener {
+            startActivity(Intent(this, EditSubjects::class.java))
+        }
         checkPermissions()
 
         activityReference = SoftReference<MainActivity>(this)
@@ -102,13 +102,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             circleb.startAnimation(animation2)
             val animation3 = AnimationUtils.loadAnimation(this, R.anim.redwaterb)
             circlebg.startAnimation(animation3)
-            micro.visibility = View.GONE;
-            circlebg.visibility = View.GONE;
-            circles.visibility = View.GONE;
-            circleb.visibility = View.GONE;
+            micro.visibility = View.GONE
+            circlebg.visibility = View.GONE
+            circles.visibility = View.GONE
+            circleb.visibility = View.GONE
 
-            spinner.visibility = View.GONE;
-            guideline3.visibility = View.VISIBLE;
+            spinner.visibility = View.GONE
+            guideline3.visibility = View.VISIBLE
             spkInfo.visibility = View.VISIBLE;
             val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
             saveFile.visibility = View.VISIBLE;
@@ -311,13 +311,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
     fun saveFile() {
         try {
-            for (dirName in subjects.keys) {
-                val f = File(savePath, dirName)
-                if (!f.exists()) {f.mkdir()}
+            val subjectName = resources.getStringArray(R.array.subject_names)[subjectId]
+            for (dirName in resources.getStringArray(R.array.subject_names)) {
+                val pDir = File(savePath, dirName)
+                if (!pDir.exists()) {pDir.mkdir()}
             }
             val dir = File(savePath, subjectName)
             val size = dir.listFiles()?.size ?: 0
-            val fileName = (size + 1).toString() + ".txt"
+            val fileName = (size + 1).toString() + ".txt" //fixme filename
             val fileToSave = File(dir, fileName)
             fileToSave.writeText(speechView.text.toString()) // it.write(speechView.text.toString())
             Toast.makeText(this@MainActivity, "Text saved to ${fileToSave.absolutePath}", Toast.LENGTH_SHORT).show()
@@ -330,8 +331,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        subjectName = subjects.keys.toList()[position]
-        modelName = subjects[subjectName].toString()
+        val subjectName = resources.getStringArray(R.array.subject_names).toList()[position]
+        val modelName = subjects[position]
+        subjectId = position
+        modelId = subjects[subjectId]
         MaterialAlertDialogBuilder(this)
             .setMessage(resources.getString(R.string.clear_text))
             .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
@@ -347,7 +350,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 recognizeMicro()
             }
             .show()
-        // fixme должно вылезти окошко и спросить: очистить окно ввода?
 
     }
 

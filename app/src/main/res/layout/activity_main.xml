@@ -133,5 +133,16 @@
         android:visibility="gone"
         app:layout_constraintGuide_percent="0.94" />
 
+    <Button
+        android:id="@+id/editSubjects"
+        android:layout_width="63dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:text="edit"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintStart_toEndOf="@+id/spinner"
+        app:layout_constraintTop_toTopOf="@+id/spinner" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

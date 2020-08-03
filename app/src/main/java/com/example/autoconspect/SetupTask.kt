@@ -22,7 +22,7 @@ class SetupTask(activity: MainActivity) : AsyncTask<Void, Void, Exception>() {
             val assetDir: File = assets.syncAssets()
             Log.d(MainActivity.TAG, "Sync files in folder: $assetDir")
             // Vosk.SetLogLevel(0)
-            activityReferenceWeak?.get()?.model = Model("$assetDir/${MainActivity.models[MainActivity.modelName]}")
+            activityReferenceWeak?.get()?.model = Model("$assetDir/${MainActivity.models[MainActivity.modelId]}")
             activityReferenceWeak?.get()?.spkModel = SpkModel("$assetDir/${MainActivity.spkModelPath}")
         } catch (e: IOException) {
             return e
