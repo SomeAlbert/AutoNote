@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.second_mact_reader.*
 import org.kaldi.Model
 import org.kaldi.RecognitionListener
 import org.kaldi.SpkModel
@@ -106,19 +107,12 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             circlebg.visibility = View.GONE
             circles.visibility = View.GONE
             circleb.visibility = View.GONE
-
-            spinner.visibility = View.GONE
-            guideline3.visibility = View.VISIBLE
-            spkInfo.visibility = View.VISIBLE;
+            setContentView(R.layout.second_mact_reader)
             val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            saveFile.visibility = View.VISIBLE;
             saveFile.startAnimation(animation4)
             val animation5 = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            start_listener.visibility = View.VISIBLE;
             start_listener.startAnimation(animation5)
-            scrollView2.visibility = View.VISIBLE
             val animation6 = AnimationUtils.loadAnimation(this, R.anim.alpha)
-            speechView.visibility = View.VISIBLE;
             speechView.startAnimation(animation6)
 
 

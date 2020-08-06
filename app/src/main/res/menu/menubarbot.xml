@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+ <item
+     android:id="@+id/save"
+     android:icon="@drawable/ic_baseline_save_24"
+     android:title="save"
+      />
+    <item
+        android:id="@+id/mic"
+        android:icon="@drawable/ic_baseline_mic_24"
+        android:title="record"
+       />
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="search"
+       />
+
+</menu>
