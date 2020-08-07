@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             circlebg.visibility = View.GONE
             circles.visibility = View.GONE
             circleb.visibility = View.GONE
-            setContentView(R.layout.second_mact_reader)
+            setContentView(R.layout.Second_Mact_Reader)
             val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
             saveFile.startAnimation(animation4)
             val animation5 = AnimationUtils.loadAnimation(this, R.anim.elevate)
