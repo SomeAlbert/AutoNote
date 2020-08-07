@@ -134,8 +134,9 @@
         app:layout_constraintGuide_percent="0.94" />
 
     <Button
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:id="@+id/editSubjects"
-        android:layout_width="63dp"
+        android:layout_width="63dp" 
         android:layout_height="36dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="4dp"
