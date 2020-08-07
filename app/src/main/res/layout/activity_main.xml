@@ -72,7 +72,7 @@
         android:id="@+id/spinner"
         android:layout_width="211dp"
         android:layout_height="26dp"
-        android:background="#DAD8D8"
+        android:background="#DFC5C5"
         android:entries="@array/subject_names"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/micro"
@@ -136,11 +136,11 @@
     <Button
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:id="@+id/editSubjects"
-        android:layout_width="63dp" 
-        android:layout_height="36dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="79dp"
+        android:layout_height="38dp"
+
         android:text="edit"
+        app:backgroundTint="#A8E31A1A"
         app:layout_constraintBottom_toBottomOf="@+id/spinner"
         app:layout_constraintStart_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="@+id/spinner" />
