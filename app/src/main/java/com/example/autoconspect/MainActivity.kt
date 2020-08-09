@@ -115,6 +115,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             val animation6 = AnimationUtils.loadAnimation(this, R.anim.alpha)
             //speechView.startAnimation(animation6)
             setContentView(R.layout.second_mact_reader)
+            noteView.text = resources.getStringArray(R.array.subject_names)[subjectId]
 
             bottomAppBar2.setNavigationOnClickListener {
                 saveFile()

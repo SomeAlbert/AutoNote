@@ -14,7 +14,7 @@ class ScrollingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scrollingactivity)
 
-        val subjects = SRActivity.subjects.values.toList()
+        val subjects = resources.getStringArray(R.array.subject_names)
         val subjectNames = resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
 
         val mAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectNames) //fixme можно поменять android.R.layout.simple_list_item_1 на чтото более красивое. Или нет

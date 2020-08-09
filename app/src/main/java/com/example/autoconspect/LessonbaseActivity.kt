@@ -26,7 +26,7 @@ class LessonbaseActivity : AppCompatActivity() {
             resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
         subjectName.text = currentSubjectName
 
-        val dirName = SRActivity.subjects.keys.toList()[subjectNames.indexOf(currentSubjectName)]
+        val dirName = currentSubjectName //SRActivity.subjects.keys.toList()[subjectNames.indexOf(currentSubjectName)]
         val filesLectures = mutableMapOf<String,String>() //{filename to filepath}
         try {
             val modelFiles = File(savePath, dirName).listFiles()
