@@ -99,6 +99,7 @@
     <string name="accept">Yes</string>
     <string name="decline">No</string>
     <string name="wrong_sub_name">Name shouldn\'t contain / or …</string>
+    <string name="start_say">Press "Start recognizing" button and say smth</string>
     <string-array name="subject_names">
         <item>Russian</item>
         <item>English</item>

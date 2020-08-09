@@ -17,16 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/english"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="372dp"
-        android:layout_height="82dp"
-        android:text="english"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subjectName" />
+
 
     <ListView
         android:id="@+id/listView"

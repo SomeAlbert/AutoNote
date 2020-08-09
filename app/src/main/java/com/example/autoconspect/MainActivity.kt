@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         const val STATE_READY = 1
         const val STATE_DONE = 2
         const val STATE_MIC = 3
+            var currentState = STATE_START
         var modelId = 0
         var subjectId = 0
         var spkModelPath = "model-spk"
@@ -83,12 +84,11 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         start_listener.setOnClickListener {
             recognizeMicro()
         }
-        saveFile.setOnClickListener {
-            saveFile()
-        }
-        editSubjects.setOnClickListener {
-            startActivity(Intent(this, EditSubjects::class.java))
-        }
+
+
+//        editSubjects.setOnClickListener {
+//            startActivity(Intent(this, EditSubjects::class.java))
+//        }
         checkPermissions()
 
         activityReference = SoftReference<MainActivity>(this)
@@ -107,13 +107,51 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             circlebg.visibility = View.GONE
             circles.visibility = View.GONE
             circleb.visibility = View.GONE
-            setContentView(R.layout.Second_Mact_Reader)
-            val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            saveFile.startAnimation(animation4)
+
+            //val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
+            //saveFile.startAnimation(animation4)
             val animation5 = AnimationUtils.loadAnimation(this, R.anim.elevate)
             start_listener.startAnimation(animation5)
             val animation6 = AnimationUtils.loadAnimation(this, R.anim.alpha)
-            speechView.startAnimation(animation6)
+            //speechView.startAnimation(animation6)
+            setContentView(R.layout.second_mact_reader)
+
+            bottomAppBar2.setNavigationOnClickListener {
+                saveFile()
+            }
+            floatingActionButton.apply{
+                this.setOnClickListener {
+                    when (currentState){
+                        STATE_READY -> {
+                            setUiState(STATE_MIC)
+                            recognizeMicro()}
+                        STATE_MIC -> {
+                            setUiState(STATE_DONE)
+                        }
+                    }
+
+            }
+            this.isEnabled = false
+            setUiState(STATE_READY)}
+
+            bottomAppBar2.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.search -> {
+                        //fixme search
+                        true
+                    }
+                    R.id.archive -> {
+                        val intent = Intent(
+                            this,
+                            ScrollingActivity::class.java
+                        ) //активация правого окна и переход
+                        startActivity(intent)
+
+                        true
+                    }
+                    else -> {false}
+                }
+            }
 
 
         }
@@ -250,24 +288,30 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     fun setUiState(state: Int) {
         when (state) {
             STATE_START -> {
+                currentState = STATE_START
                 //infoView.text = "Preparing the recognizer"
-                speechView.setText(" ")
-                speechView.movementMethod = ScrollingMovementMethod()
-                start_listener.isEnabled = false
+                //speechView.setText(" ")
+                //speechView.movementMethod = ScrollingMovementMethod()
+
             }
             STATE_READY -> {
                 //infoView.text = "ready"
+                currentState = STATE_READY
                 start_listener.text = resources.getString(R.string.start_recognizing)
-                start_listener.isEnabled = true
+                try{ floatingActionButton.isEnabled = true }
+                catch (e:Exception){}
             }
             STATE_DONE -> {
+                currentState = STATE_DONE
                 start_listener.text = resources.getString(R.string.start_recognizing)
-                start_listener.isEnabled = true
+                floatingActionButton.isEnabled = true
             }
             STATE_MIC -> {
+                currentState = STATE_MIC
+                speechView.setText("")
                 start_listener.text = resources.getString(R.string.stop_recognizing)
                 //infoView.text = "Say something"
-                start_listener.isEnabled = true
+                floatingActionButton.isEnabled = true
             }
         }
     }
@@ -327,23 +371,23 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val subjectName = resources.getStringArray(R.array.subject_names).toList()[position]
         val modelName = subjects[position]
-        subjectId = position
-        modelId = subjects[subjectId]
-        MaterialAlertDialogBuilder(this)
-            .setMessage(resources.getString(R.string.clear_text))
-            .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
-                sr?.cancel()
-                SetupTask(this).execute()
-                recognizeMicro()
-            }
-            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-                saveFile()
-                speechView.setText(" ")
-                sr?.cancel()
-                SetupTask(this).execute()
-                recognizeMicro()
-            }
-            .show()
+//        subjectId = position
+//        modelId = subjects[subjectId]
+//        MaterialAlertDialogBuilder(this)
+//            .setMessage(resources.getString(R.string.clear_text))
+//            .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+//                sr?.cancel()
+//                SetupTask(this).execute()
+//                recognizeMicro()
+//            }
+//            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+//                saveFile()
+//                speechView.setText(" ")
+//                sr?.cancel()
+//                SetupTask(this).execute()
+//                recognizeMicro()
+//            }
+//            .show()
 
     }
 
