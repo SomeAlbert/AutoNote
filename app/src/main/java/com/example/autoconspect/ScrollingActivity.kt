@@ -1,15 +1,18 @@
 package com.example.autoconspect
 
 import android.content.Intent
+import android.gesture.Gesture
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.scrollingactivity.*
 
-class ScrollingActivity : AppCompatActivity() {
+class ScrollingActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scrollingactivity)
@@ -27,5 +30,10 @@ class ScrollingActivity : AppCompatActivity() {
             intent.putExtra("sub", subjectNames[position])
             startActivity(intent)
         }
+
+
     }
+
+
+
 }

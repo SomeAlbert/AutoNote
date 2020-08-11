@@ -2,6 +2,7 @@ package com.example.autoconspect
 
 
 import android.Manifest
+import android.annotation.SuppressLint
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -21,12 +23,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.loading.*
 import kotlinx.android.synthetic.main.second_mact_reader.*
 import org.kaldi.Model
 import org.kaldi.RecognitionListener
 import org.kaldi.SpkModel
 import java.io.File
 import java.io.IOException
+import java.lang.Thread.sleep
 import java.lang.ref.SoftReference
 
 
@@ -76,9 +80,21 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val animationfade = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
+        val animationfadein =  AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+
+
+
+        setContentView(R.layout.loading)
+        sleep(500)
+        loading.startAnimation(animationfade)
+
         setContentView(R.layout.activity_main)
+        main.startAnimation(animationfadein)
+
 
         setUiState(STATE_START)
         start_listener.setOnClickListener {
@@ -95,27 +111,19 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         savePath = activityReference.get()?.applicationContext?.dataDir
 
         micro.setOnClickListener {
-            val animation = AnimationUtils.loadAnimation(this, R.anim.scale)
-            micro.startAnimation(animation)
-            val animation1 = AnimationUtils.loadAnimation(this, R.anim.redwater)
-            circles.startAnimation(animation1)
-            val animation2 = AnimationUtils.loadAnimation(this, R.anim.redwaterb)
-            circleb.startAnimation(animation2)
-            val animation3 = AnimationUtils.loadAnimation(this, R.anim.redwaterb)
-            circlebg.startAnimation(animation3)
-            micro.visibility = View.GONE
-            circlebg.visibility = View.GONE
-            circles.visibility = View.GONE
-            circleb.visibility = View.GONE
 
-            //val animation4 = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            //saveFile.startAnimation(animation4)
-            val animation5 = AnimationUtils.loadAnimation(this, R.anim.elevate)
-            start_listener.startAnimation(animation5)
-            val animation6 = AnimationUtils.loadAnimation(this, R.anim.alpha)
-            //speechView.startAnimation(animation6)
+            main.startAnimation(animationfade)
+            main.visibility = View.GONE
+
+
+
             setContentView(R.layout.second_mact_reader)
             noteView.text = resources.getStringArray(R.array.subject_names)[subjectId]
+
+            second_mact_activity.startAnimation(animationfadein)
+            val elevate = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+
+            second_mact_activity.visibility = View.VISIBLE
 
             bottomAppBar2.setNavigationOnClickListener {
                 saveFile()
@@ -125,6 +133,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                     when (currentState){
                         STATE_READY -> {
                             setUiState(STATE_MIC)
+
                             recognizeMicro()}
                         STATE_MIC -> {
                             setUiState(STATE_DONE)
@@ -149,6 +158,17 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                         startActivity(intent)
 
                         true
+                    }
+                    R.id.home->
+                    {
+
+                        val intent = Intent(
+                            this,
+                            MainActivity::class.java
+                        ) //активация правого окна и переход
+                        startActivity(intent)
+
+                     true
                     }
                     else -> {false}
                 }
@@ -393,3 +413,10 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     }
 
 }
+
+
+
+
+
+
+
