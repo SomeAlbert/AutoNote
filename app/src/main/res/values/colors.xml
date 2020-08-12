@@ -6,6 +6,7 @@
     <color name="colorPrimaryDarkD">#486597</color>
     <color name="colorAccent">#0900FF</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorgray">#E6E6FF</color>
     <color name="background">#FFFFFF</color>
 
 </resources>
