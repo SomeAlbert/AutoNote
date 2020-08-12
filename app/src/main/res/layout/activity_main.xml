@@ -72,7 +72,7 @@
         android:id="@+id/spinner"
         android:layout_width="211dp"
         android:layout_height="26dp"
-        android:background="#DFC5C5"
+        android:background="@color/colorgray"
         android:entries="@array/subject_names"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/micro"
@@ -145,6 +145,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/spinner"
         app:layout_constraintStart_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

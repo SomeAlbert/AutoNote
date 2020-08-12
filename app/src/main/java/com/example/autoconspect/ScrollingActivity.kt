@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import kotlinx.android.synthetic.main.loading.*
 import kotlinx.android.synthetic.main.scrollingactivity.*
 
 class ScrollingActivity : AppCompatActivity(){
@@ -17,19 +18,33 @@ class ScrollingActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scrollingactivity)
 
-        val subjects = resources.getStringArray(R.array.subject_names)
-        val subjectNames = resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
+        val animation_for_transition = AnimationUtils.loadAnimation(this, R.anim.redwaterb); // animation variable
 
-        val mAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectNames) //fixme можно поменять android.R.layout.simple_list_item_1 на чтото более красивое. Или нет
-
-        subjectsList.adapter = mAdapter
-
-        subjectsList.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, LessonbaseActivity::class.java )
-            Log.d("APPSR", position.toString())
-            intent.putExtra("sub", subjectNames[position])
-            startActivity(intent)
+//        val subjects = SRActivity.subjects.values.toList()
+//        val subjectNames = resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
+//
+//        val mAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectNames) //fixme можно поменять android.R.layout.simple_list_item_1 на чтото более красивое. Или нет
+//
+//        subjectsList.adapter = mAdapter
+//
+//        subjectsList.setOnItemClickListener { parent, view, position, id ->
+//            val intent = Intent(this, LessonbaseActivity::class.java )
+//            Log.d("APPSR", position.toString())
+//            intent.putExtra("sub", subjectNames[position])
+//            startActivity(intent)
+//        }
+        eng.setOnClickListener(){
+            loading.startAnimation(animation_for_transition) //anim
+            val transitiontoeng = Intent(this,MainActivity::class.java)
+            startActivity(transitiontoeng)
         }
+        //transtition to english archive
+        rus.setOnClickListener(){
+            loading.startAnimation(animation_for_transition) //anim
+            val transitiontorus = Intent(this,MainActivity::class.java)
+            startActivity(transitiontorus)
+        }
+
 
 
     }

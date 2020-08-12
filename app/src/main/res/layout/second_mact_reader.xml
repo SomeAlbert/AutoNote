@@ -22,8 +22,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="40sp"
-                android:text="Note N:"
+                android:text="Record"
                 app:fontFamily="sans-serif" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ready"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ready"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/preparing"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/preparing"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recording"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/recording"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/spkInfo"
@@ -45,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/start_say"
-                android:autofillHints="aaa"
+
                />
         </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
