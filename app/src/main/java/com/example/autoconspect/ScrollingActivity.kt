@@ -21,7 +21,7 @@ class ScrollingActivity : AppCompatActivity(){
         val animation_for_transition = AnimationUtils.loadAnimation(this, R.anim.redwaterb); // animation variable
 
 //        val subjects = SRActivity.subjects.values.toList()
-//        val subjectNames = resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
+        val subjectNames = resources.getStringArray(R.array.subject_names) // Он берет список предметов из strings.xml/subject_names
 //
 //        val mAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, subjectNames) //fixme можно поменять android.R.layout.simple_list_item_1 на чтото более красивое. Или нет
 //
@@ -34,15 +34,13 @@ class ScrollingActivity : AppCompatActivity(){
 //            startActivity(intent)
 //        }
         eng.setOnClickListener(){
-            loading.startAnimation(animation_for_transition) //anim
-            val transitiontoeng = Intent(this,MainActivity::class.java)
-            startActivity(transitiontoeng)
+            startActivity(Intent(this, LessonbaseActivity::class.java ).putExtra("sub", subjectNames[1]))
+
         }
         //transtition to english archive
         rus.setOnClickListener(){
-            loading.startAnimation(animation_for_transition) //anim
-            val transitiontorus = Intent(this,MainActivity::class.java)
-            startActivity(transitiontorus)
+            startActivity(Intent(this, LessonbaseActivity::class.java ).putExtra("sub", subjectNames[0]))
+
         }
 
 

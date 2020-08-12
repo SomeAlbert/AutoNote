@@ -310,11 +310,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         when (state) {
             STATE_START -> {
                 currentState = STATE_START
-
                 //infoView.text = "Preparing the recognizer"
                 //speechView.setText(" ")
                 //speechView.movementMethod = ScrollingMovementMethod()
-
 
             }
             STATE_READY -> {
@@ -324,8 +322,6 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 start_listener.text = resources.getString(R.string.start_recognizing)
                 try{ floatingActionButton.isEnabled = true }
                 catch (e:Exception){}
-
-
             }
             STATE_DONE -> {
                 currentState = STATE_DONE
@@ -334,11 +330,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 floatingActionButton.isEnabled = true
                 recording.visibility = View.INVISIBLE
                 ready.visibility = View.VISIBLE
-
             }
             STATE_MIC -> {
                 currentState = STATE_MIC
-
 
                 speechView.setText("")
                 start_listener.text = resources.getString(R.string.stop_recognizing)
@@ -405,7 +399,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val subjectName = resources.getStringArray(R.array.subject_names).toList()[position]
         val modelName = subjects[position]
-//        subjectId = position
+        subjectId = position
 //        modelId = subjects[subjectId]
 //        MaterialAlertDialogBuilder(this)
 //            .setMessage(resources.getString(R.string.clear_text))
