@@ -309,29 +309,42 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         when (state) {
             STATE_START -> {
                 currentState = STATE_START
+
                 //infoView.text = "Preparing the recognizer"
                 //speechView.setText(" ")
                 //speechView.movementMethod = ScrollingMovementMethod()
+
 
             }
             STATE_READY -> {
                 //infoView.text = "ready"
                 currentState = STATE_READY
+
                 start_listener.text = resources.getString(R.string.start_recognizing)
                 try{ floatingActionButton.isEnabled = true }
                 catch (e:Exception){}
+
+
             }
             STATE_DONE -> {
                 currentState = STATE_DONE
+
                 start_listener.text = resources.getString(R.string.start_recognizing)
                 floatingActionButton.isEnabled = true
+                recording.visibility = View.INVISIBLE
+                ready.visibility = View.VISIBLE
+
             }
             STATE_MIC -> {
                 currentState = STATE_MIC
+
+
                 speechView.setText("")
                 start_listener.text = resources.getString(R.string.stop_recognizing)
                 //infoView.text = "Say something"
                 floatingActionButton.isEnabled = true
+                recording.visibility = View.VISIBLE
+                ready.visibility = View.INVISIBLE
             }
         }
     }
