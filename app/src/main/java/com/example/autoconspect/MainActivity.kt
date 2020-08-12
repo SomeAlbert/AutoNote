@@ -32,6 +32,8 @@ import java.io.File
 import java.io.IOException
 import java.lang.Thread.sleep
 import java.lang.ref.SoftReference
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener, AdapterView.OnItemSelectedListener{
@@ -67,6 +69,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     lateinit var spkModel: SpkModel
     private var gson = Gson()
     var savePath: File? = null
+    var calendar = Calendar.getInstance()
+    var dateFormat = SimpleDateFormat("MMMM,d", Locale.US)
+    var timeFormat = SimpleDateFormat("HH:mm", Locale.US)
     lateinit var activityReference: SoftReference<MainActivity>
     lateinit var gestureDetector: GestureDetector
     var x2 = 0.0f
@@ -159,14 +164,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
                         true
                     }
-                    R.id.home->
-                    {
-
-                        val intent = Intent(
-                            this,
-                            MainActivity::class.java
-                        ) //активация правого окна и переход
-                        startActivity(intent)
+                    R.id.home -> {
+                        this.recreate()
+//                        val intent = Intent(
+//                            this,
+//                            MainActivity::class.java
+//                        ) //активация правого окна и переход
+//                        startActivity(intent)
 
                      true
                     }
@@ -375,24 +379,33 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         }
     }
 
-    fun saveFile() {
-        try {
-            val subjectName = resources.getStringArray(R.array.subject_names)[subjectId]
-            for (dirName in resources.getStringArray(R.array.subject_names)) {
-                val pDir = File(savePath, dirName)
-                if (!pDir.exists()) {pDir.mkdir()}
+        fun saveFile() {
+            try {
+                val subjectName = resources.getStringArray(R.array.subject_names)[subjectId]
+                for (dirName in resources.getStringArray(R.array.subject_names)) {
+                    val pDir = File(savePath, dirName)
+                    if (!pDir.exists()) {
+                        pDir.mkdir()
+                    }
+                }
+                val dir = File(savePath, subjectName)
+                val size = dir.listFiles()?.size ?: 0
+                val currentDate = dateFormat.format(calendar.time)
+                val currentTime = timeFormat.format(calendar.time)
+                val fileName = "$currentDate"
+                val fileToSave = File(dir, fileName)
+                val prevText = if (fileToSave.exists()) fileToSave.readText() else " "
+                fileToSave.writeText("$prevText \n\n\t\t$currentTime\n ${speechView.text.toString()}") // it.write(speechView.text.toString())
+                Toast.makeText(
+                    this@MainActivity,
+                    "Text saved to ${fileToSave.absolutePath}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                //writeText(speechView.text.toString())
+            } catch (e: Exception) {
+                Toast.makeText(this@MainActivity, "$e", Toast.LENGTH_SHORT).show()
             }
-            val dir = File(savePath, subjectName)
-            val size = dir.listFiles()?.size ?: 0
-            val fileName = (size + 1).toString() + ".txt" //fixme filename
-            val fileToSave = File(dir, fileName)
-            fileToSave.writeText(speechView.text.toString()) // it.write(speechView.text.toString())
-            Toast.makeText(this@MainActivity, "Text saved to ${fileToSave.absolutePath}", Toast.LENGTH_SHORT).show()
-            //writeText(speechView.text.toString())
-        } catch (e:Exception) {
-            Toast.makeText(this@MainActivity, "$e", Toast.LENGTH_SHORT).show()
         }
-    }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
