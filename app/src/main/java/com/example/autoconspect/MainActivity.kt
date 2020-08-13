@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         const val permissionRequestCode = 102
         const val STATE_START = 0
         const val STATE_READY = 1
-        const val STATE_DONE = 2
+        //const val STATE_DONE = 2
         const val STATE_MIC = 3
         var currentState = STATE_START
         var modelId = 0
@@ -120,6 +120,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
 
             setContentView(R.layout.second_mact_reader)
+            setUiState(STATE_READY)
             noteView.text = resources.getStringArray(R.array.subject_names)[subjectId]
 
             second_mact_activity.startAnimation(animationfadein)
@@ -134,12 +135,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 this.setOnClickListener {
                     when (currentState) {
                         STATE_READY -> {
-                            setUiState(STATE_MIC)
-
+                            //setUiState(STATE_MIC)
                             recognizeMicro()
                         }
                         STATE_MIC -> {
-                            setUiState(STATE_DONE)
+                            recognizeMicro()
+//                            setUiState(STATE_READY)
+                            this@MainActivity.sr?.cancel()
                         }
                     }
 
@@ -326,17 +328,18 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 try {
                     floatingActionButton.isEnabled = true
                     readyStateView.visibility = View.VISIBLE
+                    recordingStateView.visibility = View.INVISIBLE
                 } catch (e: Exception) {
                 }
             }
-            STATE_DONE -> {
-                currentState = STATE_DONE
-
-                start_listener.text = resources.getString(R.string.start_recognizing)
-                floatingActionButton.isEnabled = true
-                recordingStateView.visibility = View.INVISIBLE
-                readyStateView.visibility = View.INVISIBLE
-            }
+//            STATE_DONE -> {
+//                currentState = STATE_DONE
+//
+//                start_listener.text = resources.getString(R.string.start_recognizing)
+//                floatingActionButton.isEnabled = true
+//                recordingStateView.visibility = View.INVISIBLE
+//                readyStateView.visibility = View.VISIBLE
+//            }
             STATE_MIC -> {
                 currentState = STATE_MIC
 
@@ -367,7 +370,9 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
 
     fun recognizeMicro() {
         if (sr != null) {
-            setUiState(STATE_DONE)
+            setUiState(
+                STATE_READY
+            )
             sr?.cancel()
             sr = null
         } else {
