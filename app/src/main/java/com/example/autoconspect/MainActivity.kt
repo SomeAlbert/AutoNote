@@ -3,11 +3,9 @@ package com.example.autoconspect
 
 import android.Manifest
 import android.annotation.SuppressLint
-
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -15,11 +13,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,25 +32,26 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener, AdapterView.OnItemSelectedListener{
+class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, RecognitionListener,
+    AdapterView.OnItemSelectedListener {
 
-        companion object {
-            const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
+    companion object {
+        const val MIN_DISTANCE = 60 //фикс: уменьшена дистанция
         const val TAG = "AutoConspect"
         const val permissionRequestCode = 102
         const val STATE_START = 0
         const val STATE_READY = 1
         const val STATE_DONE = 2
         const val STATE_MIC = 3
-            var currentState = STATE_START
+        var currentState = STATE_START
         var modelId = 0
         var subjectId = 0
         var spkModelPath = "model-spk"
 
         //add models here ( [model index] : model folder name )
         var models = mutableListOf(
-             "model-small-ru",
-             "model-android"
+            "model-small-ru",
+            "model-android"
         )
 
         // ОЧЕНЬ ВАЖНО !!
@@ -89,7 +86,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val animationfade = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
-        val animationfadein =  AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        val animationfadein = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
 
 
 
@@ -133,21 +130,23 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             bottomAppBar2.setNavigationOnClickListener {
                 saveFile()
             }
-            floatingActionButton.apply{
+            floatingActionButton.apply {
                 this.setOnClickListener {
-                    when (currentState){
+                    when (currentState) {
                         STATE_READY -> {
                             setUiState(STATE_MIC)
 
-                            recognizeMicro()}
+                            recognizeMicro()
+                        }
                         STATE_MIC -> {
                             setUiState(STATE_DONE)
                         }
                     }
 
+                }
+                this.isEnabled = false
+                setUiState(STATE_READY)
             }
-            this.isEnabled = false
-            setUiState(STATE_READY)}
 
             bottomAppBar2.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -166,18 +165,14 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                     }
                     R.id.home -> {
                         this.recreate()
-//                        val intent = Intent(
-//                            this,
-//                            MainActivity::class.java
-//                        ) //активация правого окна и переход
-//                        startActivity(intent)
 
-                     true
+                        true
                     }
-                    else -> {false}
+                    else -> {
+                        false
+                    }
                 }
             }
-
 
         }
 
@@ -206,7 +201,7 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 x2 = event.x
                 val valueX: Float = kotlin.math.abs(x2 - x1)
 
-                if(valueX > MIN_DISTANCE){
+                if (valueX > MIN_DISTANCE) {
                     if (x1 > x2)  // вправо
                     {
                         val intent = Intent(
@@ -228,9 +223,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
     // Здесь ничего менять не нужно да и вообще оно не нужно, необходимо для реализации свайпов(жестов)
     override fun onShowPress(e: MotionEvent?) {}
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {return false}
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return false
+    }
 
-    override fun onDown(e: MotionEvent?): Boolean {return false}
+    override fun onDown(e: MotionEvent?): Boolean {
+        return false
+    }
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float):
             Boolean {
@@ -324,16 +323,19 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 currentState = STATE_READY
 
                 start_listener.text = resources.getString(R.string.start_recognizing)
-                try{ floatingActionButton.isEnabled = true }
-                catch (e:Exception){}
+                try {
+                    floatingActionButton.isEnabled = true
+                    readyStateView.visibility = View.VISIBLE
+                } catch (e: Exception) {
+                }
             }
             STATE_DONE -> {
                 currentState = STATE_DONE
 
                 start_listener.text = resources.getString(R.string.start_recognizing)
                 floatingActionButton.isEnabled = true
-                recording.visibility = View.INVISIBLE
-                ready.visibility = View.VISIBLE
+                recordingStateView.visibility = View.INVISIBLE
+                readyStateView.visibility = View.INVISIBLE
             }
             STATE_MIC -> {
                 currentState = STATE_MIC
@@ -342,8 +344,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
                 start_listener.text = resources.getString(R.string.stop_recognizing)
                 //infoView.text = "Say something"
                 floatingActionButton.isEnabled = true
-                recording.visibility = View.VISIBLE
-                ready.visibility = View.INVISIBLE
+                recordingStateView.visibility = View.VISIBLE
+                readyStateView.visibility = View.INVISIBLE
             }
         }
     }
@@ -358,7 +360,8 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
             ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.RECORD_AUDIO), permissionRequestCode)
+                this, arrayOf(Manifest.permission.RECORD_AUDIO), permissionRequestCode
+            )
         }
     }
 
@@ -379,33 +382,33 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         }
     }
 
-        fun saveFile() {
-            try {
-                val subjectName = resources.getStringArray(R.array.subject_names)[subjectId]
-                for (dirName in resources.getStringArray(R.array.subject_names)) {
-                    val pDir = File(savePath, dirName)
-                    if (!pDir.exists()) {
-                        pDir.mkdir()
-                    }
+    fun saveFile() {
+        try {
+            val subjectName = resources.getStringArray(R.array.subject_names)[subjectId]
+            for (dirName in resources.getStringArray(R.array.subject_names)) {
+                val pDir = File(savePath, dirName)
+                if (!pDir.exists()) {
+                    pDir.mkdir()
                 }
-                val dir = File(savePath, subjectName)
-                val size = dir.listFiles()?.size ?: 0
-                val currentDate = dateFormat.format(calendar.time)
-                val currentTime = timeFormat.format(calendar.time)
-                val fileName = "$currentDate"
-                val fileToSave = File(dir, fileName)
-                val prevText = if (fileToSave.exists()) fileToSave.readText() else " "
-                fileToSave.writeText("$prevText \n\n\t\t$currentTime\n ${speechView.text.toString()}") // it.write(speechView.text.toString())
-                Toast.makeText(
-                    this@MainActivity,
-                    "Text saved to ${fileToSave.absolutePath}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                //writeText(speechView.text.toString())
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "$e", Toast.LENGTH_SHORT).show()
             }
+            val dir = File(savePath, subjectName)
+            val size = dir.listFiles()?.size ?: 0
+            val currentDate = dateFormat.format(calendar.time)
+            val currentTime = timeFormat.format(calendar.time)
+            val fileName = "$currentDate"
+            val fileToSave = File(dir, fileName)
+            val prevText = if (fileToSave.exists()) fileToSave.readText() else " "
+            fileToSave.writeText("$prevText \n\n\t\t$currentTime\n ${speechView.text.toString()}") // it.write(speechView.text.toString())
+            Toast.makeText(
+                this@MainActivity,
+                "Text saved to ${fileToSave.absolutePath}",
+                Toast.LENGTH_SHORT
+            ).show()
+            //writeText(speechView.text.toString())
+        } catch (e: Exception) {
+            Toast.makeText(this@MainActivity, "$e", Toast.LENGTH_SHORT).show()
         }
+    }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
