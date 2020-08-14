@@ -87,15 +87,25 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         super.onCreate(savedInstanceState)
         val animationfade = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
         val animationfadein = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        val BBE1 = AnimationUtils.loadAnimation(this, R.anim.redwater);
+        val BBE2 = AnimationUtils.loadAnimation(this, R.anim.redwaterb);
+        val BBE = AnimationUtils.loadAnimation(this, R.anim.blackhole);
 
 
 
-        setContentView(R.layout.loading)
-        sleep(500)
-        loading.startAnimation(animationfade)
+        setContentView(loading)
+        YES.setOnClickListener(){
+            setContentView(R.layout.activity_main)
+            main.startAnimation(animationfadein)
+            micro.startAnimation(BBE)
+            circleb.startAnimation(BBE2)
+            circlebg.startAnimation(BBE1)
+            circles.startAnimation(BBE2)
+        }
 
-        setContentView(R.layout.activity_main)
-        main.startAnimation(animationfadein)
+
+
+
 
 
         setUiState(STATE_START)
