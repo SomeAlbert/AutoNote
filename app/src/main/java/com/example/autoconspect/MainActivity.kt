@@ -92,16 +92,13 @@ class MainActivity : AppCompatActivity(), GestureDetector.OnGestureListener, Rec
         val BBE = AnimationUtils.loadAnimation(this, R.anim.blackhole);
 
 
-
-        setContentView(loading)
-        YES.setOnClickListener(){
             setContentView(R.layout.activity_main)
-            main.startAnimation(animationfadein)
+     
             micro.startAnimation(BBE)
             circleb.startAnimation(BBE2)
             circlebg.startAnimation(BBE1)
             circles.startAnimation(BBE2)
-        }
+
 
 
 
